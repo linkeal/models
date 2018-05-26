@@ -39,7 +39,7 @@ with tf.Graph().as_default():
 
     # Create Model network and endpoints
     with slim.arg_scope(alexnet.alexnet_v2_arg_scope()):
-        logits, end_points = alexnet.alexnet_v2(images)
+        logits, end_points = alexnet.alexnet_v2(images, num_classes=dataset.num_classes)
 
     # Added Loss Function
     tf.losses.softmax_cross_entropy(labels, logits)
