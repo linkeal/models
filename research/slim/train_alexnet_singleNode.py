@@ -44,14 +44,14 @@ with tf.Graph().as_default():
                 logits, end_points = alexnet.alexnet_v2(images, num_classes=dataset.num_classes)
 
         # Added Loss Function
-        tf.losses.softmax_cross_entropy(labels, logits)
+    tf.losses.softmax_cross_entropy(labels, logits)
 
-        total_loss = slim.losses.get_total_loss()
-        tf.summary.scalar('losses/total_loss', total_loss)
+    total_loss = slim.losses.get_total_loss()
+    tf.summary.scalar('losses/total_loss', total_loss)
 
-        optimizer = tf.train.GradientDescentOptimizer(learning_rate=.001)
+    optimizer = tf.train.GradientDescentOptimizer(learning_rate=.001)
 
-        train_tensor = slim.learning.create_train_op(total_loss, optimizer)
+    train_tensor = slim.learning.create_train_op(total_loss, optimizer)
 
     summaries = set(tf.get_collection(tf.GraphKeys.SUMMARIES))
     # Merge all summaries together.
