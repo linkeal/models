@@ -37,20 +37,34 @@ with tf.Graph().as_default():
     labels = slim.one_hot_encoding(
           labels, dataset.num_classes)
 
+    with tf.device('/device:GPU:0'):
     # Create Model network and endpoints
-    with slim.arg_scope(alexnet.alexnet_v2_arg_scope()):
-        logits, end_points = alexnet.alexnet_v2(images, num_classes=dataset.num_classes)
+        with slim.arg_scope(alexnet.alexnet_v2_arg_scope()):
 
-    # Added Loss Function
-    tf.losses.softmax_cross_entropy(labels, logits)
+                logits, end_points = alexnet.alexnet_v2(images, num_classes=dataset.num_classes)
 
-    total_loss = slim.losses.get_total_loss()
-    tf.summary.scalar('losses/total_loss', total_loss)
+        # Added Loss Function
+        tf.losses.softmax_cross_entropy(labels, logits)
 
-    optimizer = tf.train.GradientDescentOptimizer(learning_rate=.001)
-    train_tensor = slim.learning.create_train_op(total_loss, optimizer)
+        total_loss = slim.losses.get_total_loss()
+        tf.summary.scalar('losses/total_loss', total_loss)
 
-    slim.learning.train(train_tensor, train_dir)
+        optimizer = tf.train.GradientDescentOptimizer(learning_rate=.001)
+
+        train_tensor = slim.learning.create_train_op(total_loss, optimizer)
+
+    summaries = set(tf.get_collection(tf.GraphKeys.SUMMARIES))
+    # Merge all summaries together.
+    summary_op = tf.summary.merge(list(summaries), name='summary_op')
+
+    slim.learning.train(
+        train_tensor,
+        logdir=train_dir,
+        log_every_n_steps=10,
+        summary_op=summary_op,
+        save_summaries_secs=30,
+        save_interval_secs=600
+    )
 
 
 if __name__ == "__main__":
