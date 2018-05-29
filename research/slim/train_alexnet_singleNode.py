@@ -57,6 +57,9 @@ with tf.Graph().as_default():
 
     train_tensor = slim.learning.create_train_op(total_loss, optimizer)
 
+
+
+
     summaries = set(tf.get_collection(tf.GraphKeys.SUMMARIES))
     # Merge all summaries together.
     summary_op = tf.summary.merge(list(summaries), name='summary_op')
@@ -66,7 +69,7 @@ with tf.Graph().as_default():
         logdir=train_dir,
         log_every_n_steps=10,
         summary_op=summary_op,
-        save_summaries_secs=30,
+        save_summaries_secs=600,
         save_interval_secs=600
     )
 
