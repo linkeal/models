@@ -97,7 +97,7 @@ def train_step_fn(session, *args, **kwargs):
     train_step_fn.step += 1
     return [total_loss, should_stop]
 
-
+train_step_fn.step = 0
 train_step_fn.accuracy_validation = accuracy_validation
 
 slim.learning.train(
