@@ -69,9 +69,8 @@ with graph.as_default():
     #Metrics
     accuracy_validation = slim.metrics.accuracy(tf.to_int32(tf.argmax(logits_val, 1)),
                                                 tf.to_int32(tf.argmax(labels_val, 1)))
-    
     top5_accuracy = tf.metrics.mean(tf.nn.in_top_k(tf.to_int32(tf.argmax(logits_val, 1)),
-                                                tf.to_int32(tf.argmax(labels_val, 1))))
+                                                tf.to_int32(tf.argmax(labels_val, 1))), 5)
 
     # Added Loss Function
     tf.losses.softmax_cross_entropy(labels, logits)
@@ -95,7 +94,7 @@ def train_step_fn(session, *args, **kwargs):
         accuracy = session.run(train_step_fn.accuracy_validation)
         top5_accuracy = session.run(train_step_fn.top5_accuracy)
         print('Step %s - Loss: %.2f Val_Accuracy: %.2f%% Val_Top5_Accuracy %.2f%%' % (
-        str(train_step_fn.step).rjust(6, '0'), total_loss, accuracy * 100, top5_accuracy * 100))
+        str(train_step_fn.step).rjust(6, '0'), total_loss, accuracy * 100, top5_accuracy))
 
 
     train_step_fn.step += 1
