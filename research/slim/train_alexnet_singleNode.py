@@ -51,8 +51,8 @@ def getImageBatchAndOneHotLabels(dataset_dir, dataset_name, num_readers, num_pre
           labels, dataset.num_classes)
     return dataset, images, labels
 
-
-with tf.Graph().as_default():
+graph = tf.Graph()
+with graph.as_default():
     tf.logging.set_verbosity(tf.logging.INFO)
 
     dataset, images, labels = getImageBatchAndOneHotLabels(dataset_dir, 'train', num_readers, num_preprocessing_threads, batch_size)
@@ -107,7 +107,8 @@ slim.learning.train(
     summary_op=summary_op,
     train_step_fn=train_step_fn,
     save_summaries_secs=600,
-    save_interval_secs=600
+    save_interval_secs=600,
+    graph=graph
 )
 
 
