@@ -70,7 +70,7 @@ with graph.as_default():
     accuracy_validation = slim.metrics.accuracy(tf.to_int32(tf.argmax(logits_val, 1)),
                                                 tf.to_int32(tf.argmax(labels_val, 1)))
     top5_accuracy = tf.metrics.mean(tf.nn.in_top_k(tf.to_int32(tf.argmax(logits_val, 1)),
-                                                tf.to_int32(tf.argmax(labels_val, 1))), 5)
+                                                tf.to_int32(tf.argmax(labels_val, 1))), k=5)
 
     # Added Loss Function
     tf.losses.softmax_cross_entropy(labels, logits)
