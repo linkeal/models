@@ -59,9 +59,10 @@ with tf.Graph().as_default():
     _, images_val, labels_val = getImageBatchAndOneHotLabels(dataset_dir, 'validation', 2, 2, batch_size)
 
     # Create Model network and endpoints
-    with tf.variable_scope("model") as scope:
-        with slim.arg_scope(alexnet.alexnet_v2_arg_scope()):
-            logits, _ = alexnet.alexnet_v2(images, num_classes=dataset.num_classes)
+
+    with slim.arg_scope(alexnet.alexnet_v2_arg_scope()):
+        logits, _ = alexnet.alexnet_v2(images, num_classes=dataset.num_classes)
+        with tf.variable_scope(tf.get_variable_scope(), reuse=True):
             logits_val, _ = alexnet.alexnet_v2(images_val, num_classes=dataset.num_classes)
 
 
