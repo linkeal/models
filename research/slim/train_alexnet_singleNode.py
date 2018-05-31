@@ -93,8 +93,10 @@ def train_step_fn(session, *args, **kwargs):
     if train_step_fn.step % validation_check == 0:
         accuracy = session.run(train_step_fn.accuracy_validation)
         top5_accuracy = session.run(train_step_fn.top5_accuracy)
-        print('Step %s - Loss: %.2f Val_Accuracy: %.2f%% Val_Top5_Accuracy %.2f%%' % (
-        str(train_step_fn.step).rjust(6, '0'), total_loss, accuracy * 100, top5_accuracy))
+        print(top5_accuracy)
+        print(type(top5_accuracy))
+        print('Step %s - Loss: %.2f Val_Accuracy: %.2f%%' % (
+        str(train_step_fn.step).rjust(6, '0'), total_loss, accuracy * 100))
 
 
     train_step_fn.step += 1
