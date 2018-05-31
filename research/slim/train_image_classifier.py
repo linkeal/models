@@ -27,6 +27,9 @@ from preprocessing import preprocessing_factory
 
 slim = tf.contrib.slim
 
+import os
+os.environ["CUDA_VISIBLE_DEVICES"]="1"
+
 tf.app.flags.DEFINE_string(
     'master', '', 'The address of the TensorFlow master to use.')
 
