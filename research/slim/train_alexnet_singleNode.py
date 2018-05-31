@@ -33,8 +33,8 @@ def getImageBatchAndOneHotLabels(dataset_dir, dataset_name, num_readers, num_pre
         provider_train = slim.dataset_data_provider.DatasetDataProvider(
             dataset,
             num_readers=num_readers,
-            common_queue_capacity=20 * batch_size,
-            common_queue_min=10 * batch_size)
+            common_queue_capacity=2 * batch_size,
+            common_queue_min= batch_size)
         [image, label] = provider_train.get(['image', 'label'])
 
     # Preprocessing of Dataset
@@ -56,12 +56,13 @@ with tf.Graph().as_default():
     tf.logging.set_verbosity(tf.logging.INFO)
 
     dataset, images, labels = getImageBatchAndOneHotLabels(dataset_dir, 'train', num_readers, num_preprocessing_threads, batch_size)
-    _, images_val, labels_val = getImageBatchAndOneHotLabels(dataset_dir, 'validation', num_readers, num_preprocessing_threads, batch_size)
+    _, images_val, labels_val = getImageBatchAndOneHotLabels(dataset_dir, 'validation', 2, 2, batch_size)
 
     # Create Model network and endpoints
-    with slim.arg_scope(alexnet.alexnet_v2_arg_scope()):
-        logits, _ = alexnet.alexnet_v2(images, num_classes=dataset.num_classes)
-        logits_val, _ = alexnet.alexnet_v2(images_val, num_classes=dataset.num_classes)
+    with tf.variable_scope("model") as scope:
+        with slim.arg_scope(alexnet.alexnet_v2_arg_scope()):
+            logits, _ = alexnet.alexnet_v2(images, num_classes=dataset.num_classes)
+            logits_val, _ = alexnet.alexnet_v2(images_val, num_classes=dataset.num_classes)
 
 
     #Metrics
