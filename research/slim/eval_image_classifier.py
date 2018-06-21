@@ -24,6 +24,8 @@ import tensorflow as tf
 from datasets import dataset_factory
 from nets import nets_factory
 from preprocessing import preprocessing_factory
+import os
+os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
 slim = tf.contrib.slim
 

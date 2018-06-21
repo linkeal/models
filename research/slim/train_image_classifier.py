@@ -27,6 +27,9 @@ from preprocessing import preprocessing_factory
 
 slim = tf.contrib.slim
 
+import os
+os.environ["CUDA_VISIBLE_DEVICES"]="1"
+
 tf.app.flags.DEFINE_string(
     'master', '', 'The address of the TensorFlow master to use.')
 
@@ -340,12 +343,10 @@ def _get_init_fn():
   # TODO(sguada) variables.filter_variables()
   variables_to_restore = []
   for var in slim.get_model_variables():
-    excluded = False
     for exclusion in exclusions:
       if var.op.name.startswith(exclusion):
-        excluded = True
         break
-    if not excluded:
+    else:
       variables_to_restore.append(var)
 
   if tf.gfile.IsDirectory(FLAGS.checkpoint_path):
@@ -551,7 +552,6 @@ def main(_):
 
     # Merge all summaries together.
     summary_op = tf.summary.merge(list(summaries), name='summary_op')
-
 
     ###########################
     # Kicks off the training. #

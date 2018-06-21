@@ -38,7 +38,7 @@ import tensorflow as tf
 
 from datasets import dataset_utils
 
-slim = tf.contrib.slim
+import tensorflow.contrib.slim as slim
 
 # TODO(nsilberman): Add tfrecord file type once the script is updated.
 _FILE_PATTERN = '%s-*'
