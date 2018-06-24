@@ -1,8 +1,10 @@
 import argparse
-import sys
+import sys, os
 
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
+
+sys.path.insert(1, os.path.join(sys.path[0], '..'))
 from nets import alexnet
 from datasets import imagenet
 from preprocessing import alexnet_preprocessing
