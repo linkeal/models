@@ -25,6 +25,9 @@ PRINT_EVERY=1
 FLAGS = None
 
 def main(_):
+    if FLAGS.job_name == "ps":
+        os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+
     ps_hosts = FLAGS.ps_hosts.split(",")
     worker_hosts = FLAGS.worker_hosts.split(",")
 
