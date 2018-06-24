@@ -10,7 +10,7 @@ from preprocessing import alexnet_preprocessing
 # ------ Global Variables -------
 batch_size = 128
 momentum = 0.9
-train_dir =r'/work/projects/Project00755/logs/alexnet_single_node_02'
+train_dir =r'/work/projects/Project00755/logs/alexnet_distributed/'
 root_dataset_dir = r'/work/projects/Project00755/datasets/imagenet/tfrecords/2_worker/'
 num_readers = 8
 num_preprocessing_threads = 8
