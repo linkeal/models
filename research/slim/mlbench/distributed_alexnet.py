@@ -9,6 +9,7 @@ from nets import alexnet
 from datasets import imagenet
 from preprocessing import alexnet_preprocessing
 
+os.environ["CUDA_VISIBLE_DEVICES"]="0"
 # ------ Global Variables -------
 batch_size = 128
 momentum = 0.9
