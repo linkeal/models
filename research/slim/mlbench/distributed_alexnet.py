@@ -14,6 +14,7 @@ batch_size = 128
 momentum = 0.9
 train_dir =r'/work/projects/Project00755/logs/alexnet_distributed/'
 dataset_dir = r'/work/projects/Project00755/datasets/imagenet/tfrecords/'
+checkpoint_dir=r'/work/projects/Project00755/logs/06_24_distributed_alexnet/'
 num_readers = 8
 num_preprocessing_threads = 8
 learning_rate = 0.01
@@ -67,7 +68,7 @@ def main(_):
 
 
         with tf.device(tf.train.replica_device_setter(
-            worker_device="/job:worker/task:%d/cpu:0" % FLAGS.task_index,
+            worker_device="/job:worker/task:%d/gpu:0" % FLAGS.task_index,
             cluster=cluster)):
 
             # Build model
@@ -90,7 +91,7 @@ def main(_):
     # or an error occurs.
     with tf.train.MonitoredTrainingSession(master=server.target,
                                            is_chief=(FLAGS.task_index == 0),
-                                           checkpoint_dir="/tmp/train_logs",
+                                           checkpoint_dir=checkpoint_dir,
                                            hooks=hooks) as mon_sess:
         step = 0
         while not mon_sess.should_stop():
