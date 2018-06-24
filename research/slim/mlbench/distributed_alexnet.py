@@ -67,7 +67,7 @@ def main(_):
 
 
         with tf.device(tf.train.replica_device_setter(
-            worker_device="/job:worker/task:%d/gpu:0" % FLAGS.task_index,
+            worker_device="/job:worker/task:%d/cpu:0" % FLAGS.task_index,
             cluster=cluster)):
 
             # Build model
@@ -99,11 +99,11 @@ def main(_):
         # perform *synchronous* training.
         # mon_sess.run handles AbortedError in case of preempted PS.
 
-            _, acc, step = mon_sess.run([train_op, accuracy, global_step])
+            _, acc, step, loss_value = mon_sess.run([train_op, accuracy, global_step, loss])
 
             if step % PRINT_EVERY == 0:
                 print("Worker : {}, Step: {}, Accuracy (batch): {}, Loss (batch): {}". \
-                  format(FLAGS.task_index, step, acc, loss))
+                  format(FLAGS.task_index, step, acc, loss_value))
 
 
 if __name__ == "__main__":
