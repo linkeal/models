@@ -91,9 +91,8 @@ def main(_):
                                            is_chief=(FLAGS.task_index == 0),
                                            checkpoint_dir=checkpoint_dir,
                                            hooks=hooks,
-                                           save_summaries_steps=1,
-                                           log_step_count_steps=1,
-                                           save_checkpoint_secs=10) as mon_sess:
+                                           save_checkpoint_secs=600,
+                                           save_summaries_secs=600) as mon_sess:
         step = 0
         while not mon_sess.should_stop():
         # Run a training step asynchronously.
