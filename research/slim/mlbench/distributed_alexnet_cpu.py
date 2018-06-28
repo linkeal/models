@@ -106,6 +106,7 @@ def main(_):
             if step % PRINT_EVERY == 0:
                 print("Worker : {}, Step: {}, Accuracy (batch): {}, Loss (batch): {}". \
                   format(FLAGS.task_index, step, acc, loss_value))
+                sys.stdout.flush()
 
 
 if __name__ == "__main__":
