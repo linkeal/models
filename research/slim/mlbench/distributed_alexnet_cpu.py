@@ -13,7 +13,6 @@ os.environ["CUDA_VISIBLE_DEVICES"]="0"
 # ------ Global Variables -------
 batch_size = 128
 momentum = 0.9
-train_dir =r'/work/projects/Project00755/logs/alexnet_distributed/'
 dataset_dir = r'/work/projects/Project00755/datasets/imagenet/tfrecords/'
 checkpoint_dir=r'/work/projects/Project00755/logs/06_24_distributed_alexnet/'
 num_readers = 8
@@ -91,7 +90,10 @@ def main(_):
     with tf.train.MonitoredTrainingSession(master=server.target,
                                            is_chief=(FLAGS.task_index == 0),
                                            checkpoint_dir=checkpoint_dir,
-                                           hooks=hooks) as mon_sess:
+                                           hooks=hooks,
+                                           save_summaries_steps=1,
+                                           log_step_count_steps=1,
+                                           save_checkpoint_secs=10) as mon_sess:
         step = 0
         while not mon_sess.should_stop():
         # Run a training step asynchronously.
