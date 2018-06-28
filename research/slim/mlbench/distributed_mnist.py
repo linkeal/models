@@ -6,10 +6,10 @@ TRAINING_STEPS = 5000
 PRINT_EVERY = 100
 LOG_DIR = "/tmp/log"
 
-#python distribute.py --job_name="ps" --task_index=0
-#python distribute.py --job_name="worker" --task_index=0
-#python distribute.py --job_name="worker" --task_index=1
-#python distribute.py --job_name="worker" --task_index=2
+#python distributed_mnist.py --job_name="ps" --task_index=0
+#python distributed_mnist.py --job_name="worker" --task_index=0
+#python distributed_mnist.py --job_name="worker" --task_index=1
+#python distributed_mnist.py --job_name="worker" --task_index=2
 
 
 parameter_servers = ["localhost:2222"]
